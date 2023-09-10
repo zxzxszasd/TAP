@@ -2,7 +2,7 @@ import openai
 import streamlit as st
 
 # Set up your OpenAI API key
-api_key = "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"
+api_key = "key"
 openai.api_key = api_key
 
 # Define the chat_with_bot function
