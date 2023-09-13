@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+</head>
+<body>
+    <div>
+        <div id="chatbox">
+            {% for message in messages %}
+                <p><strong>{{ message.sender }}:</strong> {{ message.text }}</p>
+            {% endfor %}
+        </div>
+        <form method="post" action="/chatbot/" id = "myForm">
+           
+            {% csrf_token %}
+            <select name="persona">
+                <option name = 'persona' value="security_expert">Security Expert</option>
+                <option name = 'persona' value="customer_support">Customer Support</option>
+            </select>
+            <textarea type="text" name="user_input"></textarea>
+            <button type="submit" value="Ask" id="submitbutton">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("myForm");
+            const submitButton = document.getElementById("submitbutton");
+    
+            // Retrieve the stored scroll position if it exists
+            let scrollPosition = localStorage.getItem('scrollPosition');
+    
+            // When the form is submitted
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();  // Prevent the default form submission behavior
+    
+                // Store the current scroll position
+                localStorage.setItem('scrollPosition', window.scrollY);
+    
+                // Submit the form manually
+                form.submit();
+            });
+    
+            // If there's a remembered scroll position, set it and then remove it from storage
+            if (scrollPosition !== null) {
+                window.scrollTo(0, parseInt(scrollPosition));
+                localStorage.removeItem('scrollPosition');  // Clear the stored value
+            }
+        });
+    </script>
+    
+        
+</body>
+</html>
