@@ -4,13 +4,13 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Message,  Persona
 
-openai.api_key = 'key'
+openai.api_key = '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'
 
 def chat_interface(request):
     # If POST request
     if request.method == 'POST':
         # select persona
-        selected_persona = request.POST.get('persona', 'default_persona')
+        selected_persona = request.POST.get('selected_persona', 'default_persona')
         user_input = request.POST.get('user_input')
         
         # Save user message
@@ -20,7 +20,7 @@ def chat_interface(request):
         # Generate response using OpenAI
         prompt = f"{selected_persona}: '{user_input}'?"
         try: 
-            response = openai.Completion.create(engine="davinci", prompt=prompt, max_tokens=150)
+            response = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=150)
             ai_response = response.choices[0].text.strip()
         except Exception as e:
             ai_response = "Sorry, I couldn't generate a response. Please try again later."
