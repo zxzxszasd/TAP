@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Message,  Persona
 
-openai.api_key = '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'
+openai.api_key = 'key'
 
 def chat_interface(request):
     # If POST request
