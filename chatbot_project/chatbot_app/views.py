@@ -1,4 +1,3 @@
-#openai.api_key = 'sk-YKAxcK5eIP39UU6vR4///t9T3BlbkFJmoNtQm6uyYFLb86DW41O'
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -8,7 +7,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Message,  Persona
 
-# # openai.api_key = 'key'
 openai.api_key = os.environ.get("OPENAI_KEY")
 
 def chat_interface(request):
@@ -45,3 +43,7 @@ def chat_interface(request):
     print("POST request received")
     print(f"User Input: {user_input}")
     print(f"AI Response: {ai_response}")
+
+# Input form
+def input_form(request):
+    return render(request, 'input_form.html')
