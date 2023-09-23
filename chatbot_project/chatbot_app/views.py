@@ -1,10 +1,15 @@
-#openai.api_key = 'sk-3OzIdM9OWMrp(delete)BpNkpHpET3BlbkFJuXL9y8Gi6y9eGO2ZgDCN'
+#openai.api_key = 'sk-YKAxcK5eIP39UU6vR4///t9T3BlbkFJmoNtQm6uyYFLb86DW41O'
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
 import openai
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Message,  Persona
 
-openai.api_key = 'key'
+# # openai.api_key = 'key'
+openai.api_key = os.environ.get("OPENAI_KEY")
 
 def chat_interface(request):
     # If POST request
