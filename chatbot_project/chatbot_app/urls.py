@@ -18,5 +18,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('chatbot/', views.chat_interface, name='chat_interface_without_id'),
+    path('new/', views.new_chat_session, name='new_chat_session'),
     path('', views.chat_interface, name='chat_interface'),
+    path('export/', views.export_chat_history, name='export_chat_history'),
 ]
