@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Form</title>
+  <!-- import Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="bg-gray-800 min-h-screen flex items-center">
+    <div class="w-full">
+      <h2 class="text-center text-white font-bold text-2xl mb-10">Incident Response Exercise Chatbot</h2>
+      <div class="bg-white p-10 rounded-lg md:w-3/4 mx-auto lg:w-1/2">
+        <form action="{% url 'chat_interface' %}" method="post">
+         
+          <!-- <div class="mb-4">
+                <label for="name" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Name</label>
+                <input type="text" id="name" name="name" placeholder="Put in your fullname." class="border border-gray-300 p-3 w-full rounded mb-">
+              </div> -->
+
+          <!-- Actors -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="actor">
+              Actors
+            </label>
+            <div class="relative">
+              <select name="actor"
+                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select actor</option>
+                <option value="{{apt}}">APT</option>
+                <option value="{{cyberCriminals}}">Cyber Criminals</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="scenario">
+              Scenario
+            </label>
+            <div class="relative">
+              <select name="scenario"
+                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select scenario</option>
+                <option value="{{ransom}}">Ransom</option>
+                <option value="{{reputation}}">Reputation</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Incidents -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="incident">
+              Incidents
+            </label>
+            <div class="relative">
+              <select name="incident"
+                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select incident</option>
+                <option value="{{ransomware}}">Ransomware</option>
+                <option value="{{dos}}">DoS</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Topic -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="topic">
+              Topic
+            </label>
+            <div class="relative">
+              <select name="topic"
+                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select topic</option>
+                <option value="{{payment}}">Payment</option>
+                <option value="{{lowering}}">Lowering</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Behavior -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="behavior">
+              Behaviour
+            </label>
+            <div class="relative">
+              <select name="behavior"
+                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select behaviour</option>
+                <option value="{{nice}}">Nice</option>
+                <option value="{{mean}}">Mean</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tactic -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="topic">
+              Tactic
+            </label>
+            <div class="relative">
+              <select name="tactic"
+                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select tactic</option>
+                <option value="{{doubleEx}}">Double Ex</option>
+                <option value="{{tripleEx}}">Triple Ex</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Target -->
+          <div class="mb-4">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="target">
+              Target
+            </label>
+            <div class="relative">
+              <select disabled name="target"
+                class="block appearance-none w-full bg-gray-200 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <option>Select target</option>
+                <option selected value="financial">Financial services and markets</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div></div>
+
+          <button id="start-button" class="block w-full bg-gray-800 text-white p-4 rounded-lg">Start
+            Exercise</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("start-button").addEventListener("click", function () {
+      event.preventDefault();
+      window.location.href = "chat_interface.html";
+    });
+  </script>
+</body>
+
+</html>
