@@ -18,7 +18,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('', views.input_form, name='input_form'),
-    # path('chat_interface.html', views.chat_interface, name='chat_interface'),
     path('', views.chat_interface, name='chat_interface'),
+    path('chat_interface.html', views.chat_interface, name='chat_interface'),
+    path('input_form.html', views.input_form, name='input_form'),
+    path('new/', views.new_chat_session, name='new_chat_session'),
+    path('export/', views.export_chat_history, name='export_chat_history'),
 ]
