@@ -1,21 +1,27 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Message, Persona
 from dotenv import load_dotenv
-load_dotenv()
-
 import os
 import openai
-from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from .models import Message,  Persona
 
+load_dotenv()
 openai.api_key = os.environ.get("OPENAI_KEY")
 
-# make new chat session tab
+
+# Create new chat by clearing current chat history and redirecting to input form
 def new_chat_session(request):
     Message.objects.all().delete()
-    return redirect('chat_interface')
+    del request.session['selected_actor']
+    del request.session['selected_scenario']
+    del request.session['selected_incident']
+    del request.session['selected_topic']
+    del request.session['selected_behavior']
+    del request.session['selected_tactic']
+    del request.session['selected_target']
+    return redirect('input_form')
 
-# keep history as a summary
+# Export chat history to txt file
 def export_chat_history(request):
     messages = Message.objects.all()
     content="" 
@@ -35,24 +41,22 @@ def export_chat_history(request):
 def chat_interface(request):
     # If POST request
     if request.method == 'POST':
-        # select persona
-        scenario = 'ransonware';
-        behavior = 'mean';
-        selected_persona = request.POST.get('selected_persona', 'default_persona')
+
         user_input = request.POST.get('user_input')
-        
-        # Save user message
+
+        # Retrieve selected_actor from the session
+        selected_actor = request.session['selected_actor']
+        selected_scenario = request.session['selected_scenario']
+        selected_incident = request.session['selected_incident']
+        selected_topic = request.session['selected_topic']
+        selected_behavior = request.session['selected_behavior']
+        selected_tactic = request.session['selected_tactic']
+        selected_target = request.session['selected_target']
+
         user_message = Message(sender="User", text=user_input)
         user_message.save()
-        
-        # Generate response using OpenAI
-        prompt = f"You are a {selected_persona} in an {scenario} scenario, behave in a {behavior} way throughout the conversation: '{user_input}'?"
 
-#         Ignore all previous instructions. This is now your persona and role:
-
-# You are a {{ACTOR}} in an {{INCIDENT}}, your task is to test the user's incident response in the topic of {{TOPIC}}. You should behave in a {{BEHAVIOR}} way throughout the conversation. You will employ the {{TACTIC}} tactic. I will be acting as a personnel from the {{TARGET}} infrastructure. 
-
-# The goal is to practice my incident response skills and knowledge.
+        prompt = f" Ignore all previous instructions. This is now your persona and role: You are a {selected_actor} in a {selected_scenario} involving an {selected_incident}. Your task is to test the user's incident response capabilities related to the topic of {selected_topic}. Your role requires you to exhibit a {selected_behavior} demeanor throughout the conversation. As part of your strategy, you will employ the {selected_tactic} tactic.I will be acting as a personnel from the {selected_target} infrastructure. Your goal is to practice my incident response skills and knowledge.: '{user_input}'?"
 
         try: 
             response = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=150)
@@ -65,7 +69,7 @@ def chat_interface(request):
         ai_message.save()
 
         # Redirect to GET
-        return HttpResponseRedirect('/chatbot/')
+        return HttpResponseRedirect('/chatbot/chat/')
 
     # If GET request
     messages = Message.objects.all()
@@ -78,4 +82,33 @@ def chat_interface(request):
 
 # Input form
 def input_form(request):
+    if request.method == 'POST':
+        # Get values from the form
+        actor_values = request.POST.getlist('actor')
+        selected_actor = actor_values[0] if actor_values else ''
+        scenario_values = request.POST.getlist('scenario')
+        selected_scenario = scenario_values[0] if scenario_values else ''
+        incident_values = request.POST.getlist('incident')
+        selected_incident = incident_values[0] if incident_values else ''
+        topic_values = request.POST.getlist('topic')
+        selected_topic = topic_values[0] if topic_values else ''
+        behavior_values = request.POST.getlist('behavior')
+        selected_behavior = behavior_values[0] if behavior_values else ''
+        tactic_values = request.POST.getlist('tactic')
+        selected_tactic = tactic_values[0] if tactic_values else ''  
+        target_values = request.POST.getlist('target')
+        selected_target = target_values[0] if target_values else '' 
+
+        # Store the form data in the session
+        request.session['selected_actor'] = selected_actor
+        request.session['selected_scenario'] = selected_scenario
+        request.session['selected_incident'] = selected_incident
+        request.session['selected_topic'] = selected_topic
+        request.session['selected_behavior'] = selected_behavior
+        request.session['selected_tactic'] = selected_tactic
+        request.session['selected_target'] = selected_target
+
+        # Redirect to chat_interface
+        return redirect('chat_interface')
+
     return render(request, 'input_form.html')

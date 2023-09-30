@@ -14,11 +14,8 @@
     <div class="w-full">
       <h2 class="text-center text-white font-bold text-2xl mb-10">Incident Response Exercise Chatbot</h2>
       <div class="bg-white p-10 rounded-lg md:w-3/4 mx-auto lg:w-1/2">
-        <form action="">
-          <!-- <div class="mb-4">
-                <label for="name" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Name</label>
-                <input type="text" id="name" name="name" placeholder="Put in your fullname." class="border border-gray-300 p-3 w-full rounded mb-">
-              </div> -->
+        <form action="" method="POST">
+          {% csrf_token %}
 
           <!-- Actors -->
           <div class="mb-4">
@@ -30,7 +27,7 @@
                 class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option>Select actor</option>
                 <option value="apt">APT</option>
-                <option value="cyber-criminals">Cyber Criminals</option>
+                <option value="cyberCriminals">Cyber Criminals</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -126,11 +123,11 @@
               Tactic
             </label>
             <div class="relative">
-              <select name="topic"
+              <select name="tactic"
                 class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option>Select tactic</option>
-                <option value="double-ex">Double Ex</option>
-                <option value="triple-ex">Triple Ex</option>
+                <option value="doubleEx">Double Ex</option>
+                <option value="tripleEx">Triple Ex</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -146,7 +143,7 @@
               Target
             </label>
             <div class="relative">
-              <select disabled name="target"
+              <select name="target"
                 class="block appearance-none w-full bg-gray-200 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option>Select target</option>
                 <option selected value="financial">Financial services and markets</option>
@@ -159,22 +156,11 @@
             </div>
           </div>
 
-          <!-- Preview -->
-          <div></div>
-
-          <button id="start-button" class="block w-full bg-gray-800 text-white p-4 rounded-lg">Start
-            Exercise</button>
+          <input type="submit" class="block w-full bg-gray-800 text-white p-4 rounded-lg" value="Start Exercise">
         </form>
       </div>
     </div>
   </div>
-
-  <script>
-    document.getElementById("start-button").addEventListener("click", function () {
-      event.preventDefault();
-      window.location.href = "chat_interface.html";
-    });
-  </script>
 </body>
 
 </html>

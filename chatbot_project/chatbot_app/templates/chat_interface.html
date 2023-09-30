@@ -25,7 +25,7 @@
 
                 <!-- Left Items -->
                 <div>
-                    <span class="text-white text-xl text-bold">ChatBot</span>
+                    <span class="text-white text-xl font-bold">Incident Response Exercise Chatbot</span>
                 </div>
 
                 <!-- Right Items -->
@@ -36,8 +36,9 @@
                      md:justify-between 
                      md:pt-0">
                         <li>
-                            <span class="text-white text-bold"><a href="{% url 'export_chat_history' %}">Export Chat
-                                    History</a></span>
+                            <button class="text-white px-4 py-2 rounded-md">
+                                <a href="{% url 'export_chat_history' %}">Export Chat History</a>
+                            </button>
                         </li>
                         <li>
                             <button id="newChatButton" class="bg-blue-500 text-white px-4 py-2 rounded-md"
@@ -68,30 +69,28 @@
 
         <!-- Input area -->
         <div class="fixed inset-x-0 bottom-0 bg-gray-200">
-            <form method="post" action="/chatbot/chat_interface.html" id="myForm"
+            <form method="POST" action="" id="myForm"
                 class="max-w-screen-lg m-auto w-full p-4 flex space-x-4 justify-center items-center">
                 {% csrf_token %}
-                <!-- Persona selection -->
-                <select id="persona" name="selected_persona"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <!-- <option selected>Select Persona</option> -->
-                    <option value="security_expert">Security Expert</option>
-                    <option value="customer_support">Customer Support</option>
-                </select>
-
                 <!-- Message input -->
                 <input id="message" name="user_input" type="text" autocomplete="off"
                     class="border rounded-md p-2 flex-1 border-gray-300" x-model="newMessage"
                     placeholder="Your message...">
 
                 <!-- Send -->
-                <button type="submit" value="Ask" id="submitbutton" class="bg-gray-800 text-white px-4 py-2 rounded-md"
-                    :class="{'opacity-50' : waitingOnResponse}">Send</button>
+                <input type="submit" value="Send" id="submitbutton"
+                    class="bg-gray-800 text-white px-4 py-2 rounded-md"></input>
+
             </form>
         </div>
     </div>
 
     <script>
+        function openNewChat() {
+            // window.open('/chatbot/new/', '_blank');
+            window.location.href = "{% url 'new_chat_session' %}";
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
             const submitButton = document.getElementById("submitbutton");
@@ -115,12 +114,8 @@
                 window.scrollTo(0, parseInt(scrollPosition));
                 localStorage.removeItem('scrollPosition');  // Clear the stored value
             }
-        });
 
-        // New chat tab
-        function openNewChat() {
-            window.open('/chatbot/new/', '_blank');
-        }
+        });
     </script>
 </body>
 
