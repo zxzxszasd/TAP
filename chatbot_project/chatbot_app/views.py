@@ -4,6 +4,7 @@ from .models import Message, Persona
 from dotenv import load_dotenv
 import os
 import openai
+import json
 
 load_dotenv()
 openai.api_key = os.environ.get("OPENAI_KEY")
@@ -52,6 +53,33 @@ def chat_interface(request):
         selected_tactic = request.session['selected_tactic']
         selected_target = request.session['selected_target']
 
+        json_file_path = 'chatbot_app/background.json'
+
+        # Read the JSON file
+        with open(json_file_path) as json_file:
+                data = json.load(json_file)
+        matching_backgrounds = []
+
+        # Loop through the JSON data
+        for entry in data:
+            if (
+                entry['actor'] == selected_actor and
+                entry['scenario'] == selected_scenario and
+                entry['incidents'] == selected_incident and
+                entry['topic'] == selected_topic and
+                entry['behavior'] == selected_behavior and
+                entry['tactic'] == selected_tactic and
+                entry['target'] == selected_target
+            ):
+                matching_backgrounds.append(entry['background'])
+
+
+        # More specific definition to model chatbot
+        if selected_behavior == 'nice':
+            selected_behavior = 'calm and polite but very stern and calculative'
+
+        background = matching_backgrounds[0] if matching_backgrounds else "No matching background found"
+
         # Add print statements to check the selected values
         print(f"Selected Actor: {selected_actor}")
         print(f"Selected Scenario: {selected_scenario}")
@@ -60,11 +88,13 @@ def chat_interface(request):
         print(f"Selected Behavior: {selected_behavior}")
         print(f"Selected Tactic: {selected_tactic}")
         print(f"Selected Target: {selected_target}")
+        print(f"Background: {background}")
 
         user_message = Message(sender="User", text=user_input)
         user_message.save()
 
-        prompt = f" From now on you are going to act as the the mastermind behind a sophisticated cyberattack {selected_actor} operation, your mission is to orchestrate a {selected_incident} attack to tarnish {selected_scenario}, aiming to {selected_topic}. Your target operates in the {selected_target} industry. Your strategy involves behaving in a {selected_behavior} manner, establishing seamless communications using the {selected_tactic} tactic with the target. Your role is to interact dynamically with the target and challenges their defenses. The conversation should simulate a real life incident response as much as possible. ```{user_input}```"""
+        prompt = f"""From now on, you are going to act as the mastermind attacker behind a sophisticated cyberattack operation as the {selected_actor}. Your mission is to execute a {selected_incident} attack to disrupt and undermine {selected_scenario}, with the ultimate goal of {selected_topic}. The target of your attack is the user, who operates in the {selected_target} industry. Your strategy involves adopting a {selected_behavior} manner while establishing seamless communication with the target using the {selected_tactic} tactic. {background}. You need to dynamically engage with the target, challenging their defenses and ensuring the success of your mission. If the target does not express concern or show cooperative intentions, escalate your aggression and respond with increasingly threatening actions. Begin the conversation by stating the data you possess in your possession and clearly communicate the ransom demand you expect from the target. Specify the timeframe within which they must respond to your offer and tell the target what is at stake if they don't respond accordingly.```{user_input}```"""
+
 
         try: 
             response = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=150)
