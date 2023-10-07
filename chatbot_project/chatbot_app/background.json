@@ -15,7 +15,7 @@
     "incidents": "ransomware",
     "topic": "payment",
     "behavior": "nice",
-    "tactic": "DoubleEx",
+    "tactic": "doubleEx",
     "target": "financial",
     "background": "Operation Cryptic Yield is strategically designed with overarching objectives, with APT1 employing a dual-pronged approach. Firstly, the threat actor targets Ransom Demand by encrypting critical systems and data, compelling victims to pay a substantial ransom in cryptocurrency for the secure release of decryption keys. Concurrently, APT1 focuses on Financial Data Exploitation, seeking to extract and exfiltrate sensitive payment information. This maneuver not only facilitates potential financial fraud but also raises the specter of identity theft or lucrative transactions on the dark web. The combination of these objectives underscores the sophisticated and multifaceted nature of APT1's cyber operations in Operation Cryptic Yield. The process unfolds in meticulous stages: beginning with Initial Data Harvesting, APT1 conducts extensive account discovery, infrastructure acquisition, and data archiving to amass a repository of valuable information. Subsequently, the threat actor implements Ransomware Encryption, deploying malicious software to encrypt targeted systems and issuing a ransom demand for decryption. In tandem, APT1 engages in the Exfiltration of Critical Data, strategically extracting sensitive payment information during the ransomware attack. This strategic maneuver not only holds the victim hostage to ransom but also sets the stage for future exploitation of the exfiltrated payment data. The orchestration of these stages reflects APT1's advanced capabilities and underscores the multifaceted nature of its cyber threats."
   }
