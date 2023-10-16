@@ -12,7 +12,7 @@ def save_file(filepath, content):
         outfile.write(content)
 
 # Set the OpenAI API keys by reading them from files
-openai.api_key = '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'
+openai.api_key = ''
 
 # with open ("C:/Users/beryl/Desktop/dataset.jsonl", "rb") as file:
 #     response = openai.File.create(
